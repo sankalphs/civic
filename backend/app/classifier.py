@@ -61,7 +61,7 @@ def classify_issue(text: str) -> dict:
 
         for keyword in authority["keywords"]:
             if keyword in lower:
-                score += len(keyword.split())
+                score += len(keyword)
                 matched.append(keyword)
 
         if score > best_score:
@@ -77,7 +77,8 @@ def classify_issue(text: str) -> dict:
             "matched_keywords": []
         }
 
-    confidence = min(best_score / max(len(words) * 0.3, 1), 1)
+    text_len = max(len(lower), 1)
+    confidence = min(best_score / (text_len * 0.3), 1)
 
     return {
         "category": best_match,

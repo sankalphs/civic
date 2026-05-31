@@ -57,7 +57,8 @@ async def create_issue(
             shutil.copyfileobj(photo.file, f)
         photo_path = filename
 
-    if category == "auto" or category not in get_authority_for_category.__code__.co_consts:
+    from app.classifier import AUTHORITIES as VALID_CATEGORIES
+    if category == "auto" or category not in VALID_CATEGORIES:
         result = classify_issue(description)
         if result["category"] and result["category"] != "unknown":
             category = result["category"]
